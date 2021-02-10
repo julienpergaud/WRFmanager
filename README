@@ -1,0 +1,22 @@
+1/Requirements
+
+Creer un repertoire PythonPackage
+Python 2.7.x
+Lib F90nml à prendre sous mon compte au ccub dans /user1/crct/ju8253pe/PythonPackage (copier le rep lib dans votre rep PythonPackage)
+
+2/ Premiere installation
+
+Pour installer le WRF_Manager il suffit de faire (1 seule et unique fois):
+git clone ssh://LOGIN@tempete06.u-bourgogne.fr/volume1/Git/WRF_manager 
+dans le répertoire PythonPackage prealablement cree
+
+Inclure une variable PYTHONPATH dans votre .profile situe dans votre rep HOME:
+
+PYTHONPATH=$PYTHONPATH:.:/votre chemin jusqu a PythonPackage/lib/python2.7/site-packages/:/votre chemin jusqu a PythonPackage/WRF_manager/src
+
+
+3/ MAJ
+
+Lorsqu un mail de MAJ vous est envoyé signalant une mise à jour du WRF Manager, vous pouvez mettre à jour votre version en lancant la commande
+git pull
+dans votre repertoire ...../PythonPackage/WRF_manager 
