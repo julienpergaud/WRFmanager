@@ -189,9 +189,15 @@ def CreateJobFile(dictConfig,tool,blocNumber=0,dateBegin=dtime.datetime(1970,1,1
         elif tool == 'real':
             fileJob.write('#$ -pe dmp* '+str(dictConfig["nbprocReal"])+'\n')
             if dictConfig["nodededic"]!= '':
-                fileJob.write(dictConfig["nodededic"]+' \n')
+                if dictConfig["nodededic"]=="amd":
+                    fileJob.write('#$ -l vendor='+dictConfig["nodededic"]+' \n')
+                else:
+                    fileJob.write(dictConfig["nodededic"]+' \n')
             if dictConfig["binding"]== False:
-                fileJob.write('mpiib real.exe \n') 
+                if dictConfig["nodededic"]=="amd":
+                    fileJob.write('mpirun -np '+str(dictConfig["nbprocReal"])+'  real.exe \n') 
+                else:
+                    fileJob.write('mpiib real.exe \n')             
             else:
                 fileJob.write('mpirun --mca mpi_paffinity_alone 1 real.exe   \n')
     
@@ -205,7 +211,7 @@ def CreateJobFile(dictConfig,tool,blocNumber=0,dateBegin=dtime.datetime(1970,1,1
                 if dictConfig["nodededic"]=="amd":
                     fileJob.write('#$ -l vendor='+dictConfig["nodededic"]+' \n')
                 else:
-                    fileJob.write('#$ -l vendor='+dictConfig["nodededic"]+' \n')
+                    fileJob.write(dictConfig["nodededic"]+' \n')
                 
             if blocNumber!=0:
                 for i in range(1,nbDomain+1):
