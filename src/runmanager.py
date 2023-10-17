@@ -79,9 +79,12 @@ for i in range(0,len(dateBlocList)-1):
     #Process namelisr for real
     os.chdir(wrfDirBloc)
     nbDomain=nlistRun['domains']['max_dom']
-    
+    nlistRun.write(wrfDirBloc+"/namelist.wrf",force=True)
 
-    nlistRun.write(wrfDirBloc+"/namelist.input",force=True)
+    nlistRun['domains']['nproc_x']=-1
+    nlistRun['domains']['nproc_y']=-1
+
+    nlistRun.write(wrfDirBloc+"/namelist.real",force=True)
 
     
 

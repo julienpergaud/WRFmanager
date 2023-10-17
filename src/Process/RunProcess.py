@@ -193,6 +193,7 @@ def CreateJobFile(dictConfig,tool,blocNumber=0,dateBegin=dtime.datetime(1970,1,1
                     fileJob.write('#$ -l vendor='+dictConfig["nodededic"]+' \n')
                 else:
                     fileJob.write(dictConfig["nodededic"]+' \n')
+            fileJob.write('cp -f namelist.real namelist.input \n')
             if dictConfig["binding"]== False:
                 if dictConfig["nodededic"]=="amd":
                     fileJob.write('mpirun -np '+str(dictConfig["nbprocReal"])+'  real.exe \n') 
@@ -212,7 +213,7 @@ def CreateJobFile(dictConfig,tool,blocNumber=0,dateBegin=dtime.datetime(1970,1,1
                     fileJob.write('#$ -l vendor='+dictConfig["nodededic"]+' \n')
                 else:
                     fileJob.write(dictConfig["nodededic"]+' \n')
-                
+            fileJob.write('cp -f namelist.wrf namelist.input \n')          
             if blocNumber!=0:
                 for i in range(1,nbDomain+1):
                     fileNameGen='wrfrst_d0'+str(i)+'_'+dateBegin.strftime('%Y-%m-%d_%H:%M:%S')        
