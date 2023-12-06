@@ -69,7 +69,7 @@ if dictConfig['real']==False:
         
 for i in range(0,len(dateBlocList)-1):
     
-    nlistRun=datefunc.dateRealManager(dateBlocList[i],dateBlocList[i+1],nml,logger,i,dictConfig)
+    nlistRun=datefunc.dateRealManager(dateBlocList[i],dateBlocList[i+1],dict(nml),logger,i,dictConfig)
     
     try:
         wrfDirBloc=repfunc.creatRep(wrfDirRun,'Bloc_'+str(i),logger,force=False)

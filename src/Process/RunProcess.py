@@ -25,7 +25,7 @@ def RunUngrib(dictConfig,logger,dateBegin,dateEnd,idJobGeo,wpsDirRun,nbBloc):
             logger.error('Prepro Manager stops')
             sys.exit()
     if dictConfig['dirIntermediateFile']!='' and dictConfig["ungrib"]==False:
-        filesToLink=DateForPFile(dictConfig,dateBegin,dateEnd)
+        filesToLink=DateForPFile(dictConfig['dirIntermediateFile'],dictConfig['prefixIntermediateFile'],dateBegin,dateEnd)
         if filesToLink!=[]:
             for row in filesToLink:
                 subprocess.call('ln -s '+row, shell=True)
@@ -34,6 +34,14 @@ def RunUngrib(dictConfig,logger,dateBegin,dateEnd,idJobGeo,wpsDirRun,nbBloc):
             logger.error( 'no PFILES to link')
             logger.error('Prepro Manager stops')
             sys.exit()           
+        if dictConfig['dirIntermediateSSTFile']!='':
+            filesToLink=DateForPFile(dictConfig['dirIntermediateSSTFile'],dictConfig['prefixIntermediateSSTFile'],dateBegin,dateEnd)
+            if filesToLink!=[]:
+                for row in filesToLink:
+                    subprocess.call('ln -s '+row, shell=True)
+            else:
+                logger.warning( 'no SST PFILES to link')
+                logger.warning(' Prepro Manager will used only generic Pfiles')
             
     if dictConfig["ungrib"]:
 
@@ -366,10 +374,10 @@ def DateForMetgrid(dictConfig,dateBegin,dateEnd):
         
     return listfile
 
-def DateForPFile(dictConfig,dateBegin,dateEnd):
+def DateForPFile(directory,prefix,dateBegin,dateEnd):
     
     listfile=[]
-    listGribFile=glob.glob(dictConfig['dirIntermediateFile']+"/*/"+dictConfig['prefixIntermediateFile']+"*")
+    listGribFile=glob.glob(directory+"/*/"+prefix+"*")
 
     for row in listGribFile:
         res = re.search(".*(\d{4})[-_]{0,1}(\d{0,2})[-_]{0,1}(\d{0,2})",row)

@@ -159,6 +159,9 @@ for i in range(0,len(dateBlocList)-1):
         nml['metgrid']['fg_name']=dictConfig['prefixIntermediateFile']
         if dictConfig["ungribSST"]==True:
             nml['metgrid']['fg_name']=[dictConfig['prefixIntermediateFile'],'SST_FILE']
+        elif dictConfig['dirIntermediateFile']!='':
+            nml['metgrid']['fg_name']=[dictConfig['prefixIntermediateFile'],dictConfig['prefixIntermediateSSTFile']]
+
             
             
     nml['metgrid']['opt_output_from_metgrid_path']=dictConfig['dirMetFile']
